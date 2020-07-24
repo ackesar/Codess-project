@@ -525,6 +525,7 @@ function drawWinningLine(_ref) {
 
 //Starts a new game with a certain depth and a starting_player of 1 if human is going to start
 function newGame() {
+	console.log('krsken')
 	var depth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 	var starting_player = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
