@@ -36,6 +36,7 @@ function drawWinningLine({ direction, row }) {
 
 //Starts a new game with a certain depth and a starting_player of 1 if human is going to start
 function newGame(depth = -1, starting_player = 1, game_mode = 1) {
+	console.log(game_mode + 'check')
 	//Instantiating a new player and an empty board
 	let p = new Player(parseInt(depth));
 	let b = new Board(['','','','','','','','','']);
