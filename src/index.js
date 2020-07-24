@@ -35,7 +35,7 @@ function drawWinningLine({ direction, row }) {
 
 
 //Starts a new game with a certain depth and a starting_player of 1 if human is going to start
-function newGame(depth = -1, starting_player = 1) {
+function newGame(depth = -1, starting_player = 1, game_mode = 1) {
 	//Instantiating a new player and an empty board
 	let p = new Player(parseInt(depth));
 	let b = new Board(['','','','','','','','','']);
@@ -109,10 +109,11 @@ document.addEventListener("DOMContentLoaded", event => {
 	//Start a new game when page loads with default values
 	let depth = -1;
 	let starting_player = 1;
-	newGame(depth, starting_player);
+	let game_mode = 1;
+	newGame(depth, starting_player, game_mode);
 
 
-	//Events handlers for depth, starting player options
+	//Events handlers for depth, starting player, game mode options
 	document.getElementById("depth").addEventListener("click", (event) => {
 		if(event.target.tagName !== "LI" || hasClass(event.target, 'active')) return
 		let depth_choices = [...document.getElementById("depth").children[0].children];
@@ -122,7 +123,8 @@ document.addEventListener("DOMContentLoaded", event => {
 		addClass(event.target, 'active');
 		depth = event.target.dataset.value;
 	}, false);
-
+	
+	
 	document.getElementById("starting_player").addEventListener("click", (event) => {
 		if(event.target.tagName !== "LI" || hasClass(event.target, 'active')) return
 		let starting_player_choices = [...document.getElementById("starting_player").children[0].children];
@@ -132,9 +134,19 @@ document.addEventListener("DOMContentLoaded", event => {
 		addClass(event.target, 'active');
 		starting_player = event.target.dataset.value;
 	}, false);
+	
+	document.getElementById("game_mode").addEventListener("click", (event) => {
+		if(event.target.tagName !== "LI" || hasClass(event.target, 'active')) return
+		let game_mode_choices = [...document.getElementById("game_mode").children[0].children];
+		game_mode_choices.forEach((choice) => {
+			removeClass(choice, 'active');
+		});
+		addClass(event.target, 'active');
+		depth = event.target.dataset.value;
+	}, false);
 
 	document.getElementById("newgame").addEventListener('click', () => {
-		newGame(depth, starting_player);
+		newGame(depth, starting_player, game_mode);
 	});
 
 });
