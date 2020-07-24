@@ -651,7 +651,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	//Start a new game when page loads with default values
 	var depth = -1;
 	var starting_player = 1;
-	var new_game = 1;
+	var game_mode = 1;
 	newGame(depth, starting_player, game_mode);
 
 	//Events handlers for depth, starting player options
