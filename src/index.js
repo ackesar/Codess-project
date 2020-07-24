@@ -36,7 +36,7 @@ function drawWinningLine({ direction, row }) {
 
 //Starts a new game with a certain depth and a starting_player of 1 if human is going to start
 function newGame(depth = -1, starting_player = 1, game_mode = 1) {
-	console.log(game_mode + 'check')
+	console.log(game_mode + 'check');
 	//Instantiating a new player and an empty board
 	let p = new Player(parseInt(depth));
 	let b = new Board(['','','','','','','','','']);
@@ -109,6 +109,7 @@ function newGame(depth = -1, starting_player = 1, game_mode = 1) {
 		
 		//if mode is human vs human	
 		if(!mode){
+		console.log('checking for h vs h')
 		//adding event listener for each cell
 		b.state.forEach((cell, index) => {
   		html_cells[index].addEventListener('click', () => {
@@ -146,7 +147,7 @@ function newGame(depth = -1, starting_player = 1, game_mode = 1) {
 			}
 			player_turn = 1;
 			if(cell) addClass(html_cells[index], cell);
-		
+		}
 		
   	});
 
