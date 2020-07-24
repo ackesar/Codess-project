@@ -57,9 +57,9 @@ function newGame(depth = -1, starting_player = 1, game_mode = 1) {
 		maximizing = starting,
 		player_turn = starting;
 	let mode = parseInt(game_mode);
-
+	if(mode){
 	//If computer is going to start, choose a random cell as long as it is the center or a corner
-	if(!starting && mode) {
+	if(!starting) {
 		let center_and_corners = [0,2,4,6,8];
 		let first_choice = center_and_corners[Math.floor(Math.random()*center_and_corners.length)];
 		let symbol = !maximizing ? 'x' : 'o';
@@ -104,47 +104,50 @@ function newGame(depth = -1, starting_player = 1, game_mode = 1) {
   			});
   		}, false);
   		if(cell) addClass(html_cells[index], cell);
-  	});
-	if(starting && !mode){
-	
+	}
 		
-
-	//Adding Click event listener for each cell
-  	b.state.forEach((cell, index) => {
+		//if mode is human vs human	
+		if(!mode){
+		//adding event listener for each cell
+		b.state.forEach((cell, index) => {
   		html_cells[index].addEventListener('click', () => {
   			//If cell is already occupied or the board is in a terminal state or it's not humans turn, return false
   			if(hasClass(html_cells[index], 'x') || hasClass(html_cells[index], 'o') || b.isTerminal() || !player_turn) return false;
 
-  			let symbol = (starting -1) ? 'x' : 'o'; //Maximizing player is always 'x'
-
+  			let symbol = (starting == 1) ? 'x' : 'o'; // player 1 is always 'x'
+	
   			//Update the Board class instance as well as the Board UI
   			b.insert(symbol, index);
   			addClass(html_cells[index], symbol);
-
-  			//If it's a terminal move and it's not a draw, then human won
-  			if(b.isTerminal()) {
+			
+			if(b.isTerminal()) {
   				let { winner } = b.isTerminal();
 				if(winner !== 'draw') addClass(document.getElementById("charachters"), 'celebrate_human');
   				drawWinningLine(b.isTerminal());
   			}
-  			player_turn = 1; //Switch turns
+			player_turn = 2;
+			//starting = 2;
+			b.state.forEach((cell, index) => {
+  		html_cells[index].addEventListener('click', () => {
+  			//If cell is already occupied or the board is in a terminal state or it's not humans turn, return false
+  			if(hasClass(html_cells[index], 'x') || hasClass(html_cells[index], 'o') || b.isTerminal() || !player_turn) return false;
 
-  			//Get computer's best move and update the UI
-  			
-  				let symbol = starting -1 ? 'x' : 'o';
-  				b.insert(symbol, best);
-  				addClass(html_cells[best], symbol);
-  				if(b.isTerminal()) {
-	  				let { winner } = b.isTerminal();
-					if(winner !== 'draw') addClass(document.getElementById("charachters"), 'celebrate_robot');
-	  				drawWinningLine(b.isTerminal());
-	  			}
-  				player_turn = 2; //Switch turns
-  			});
-  		}, false);
-  		if(cell) addClass(html_cells[index], cell);
+  			let symbol = (starting == 2) ? 'x' : 'o'; // player 1 is always 'x'
+	
+  			//Update the Board class instance as well as the Board UI
+  			b.insert(symbol, index);
+  			addClass(html_cells[index], symbol);
+			
+			if(b.isTerminal()) {
+  				let { winner } = b.isTerminal();
+				if(winner !== 'draw') addClass(document.getElementById("charachters"), 'celebrate_human');
+  				drawWinningLine(b.isTerminal());
+			}
+			player_turn = 1;
+			if(cell) addClass(html_cells[index], cell);
+		
+		
   	});
-}
 
 document.addEventListener("DOMContentLoaded", event => { 
 
