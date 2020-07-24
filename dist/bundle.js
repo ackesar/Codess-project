@@ -599,7 +599,7 @@ function newGame() {
 			});
 		}, false);
 		if (cell) addClass(html_cells[index], cell);
-	})
+	});
 		//if game mode is human vs human
 			If(!mode){
 		//adding event listener for each cell
