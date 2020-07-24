@@ -35,6 +35,7 @@ function drawWinningLine({ direction, row }) {
 
 
 //Starts a new game with a certain depth and a starting_player of 1 if human is going to start
+//adding a new varaible game_mode 
 function newGame(depth = -1, starting_player = 1, game_mode = 1) {
 	console.log(game_mode + 'check');
 	//Instantiating a new player and an empty board
@@ -58,6 +59,7 @@ function newGame(depth = -1, starting_player = 1, game_mode = 1) {
 		maximizing = starting,
 		player_turn = starting;
 	let mode = parseInt(game_mode);
+	//for the human vs computer mode, mode = 1
 	if(mode){
 	//If computer is going to start, choose a random cell as long as it is the center or a corner
 	if(!starting) {
@@ -107,7 +109,7 @@ function newGame(depth = -1, starting_player = 1, game_mode = 1) {
   		if(cell) addClass(html_cells[index], cell);
 	}
 		
-		//if mode is human vs human	
+		//if mode is human vs human, mode =0. 	
 		if(!mode){
 		console.log('checking for h vs h')
 		//adding event listener for each cell
