@@ -528,7 +528,7 @@ function newGame() {
 	console.log('krsken')
 	var depth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 	var starting_player = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	var game_mode = arguments.length > 1 && arguments[2] !== undefined ? arguments[2] : 1;
+	//var game_mode = arguments.length > 1 && arguments[2] !== undefined ? arguments[2] : 1;
 	//Instantiating a new player and an empty board
 	var p = new _Player2.default(parseInt(depth));
 	var b = new _Board2.default(['', '', '', '', '', '', '', '', '']);
