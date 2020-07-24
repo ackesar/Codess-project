@@ -527,7 +527,7 @@ function drawWinningLine(_ref) {
 function newGame() {
 	var depth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 	var starting_player = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	
+	var game_mode = arguments.length > 1 && arguments[2] !== undefined ? arguments[2] : 1;
 	//Instantiating a new player and an empty board
 	var p = new _Player2.default(parseInt(depth));
 	var b = new _Board2.default(['', '', '', '', '', '', '', '', '']);
@@ -627,6 +627,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		});
 		addClass(event.target, 'active');
 		starting_player = event.target.dataset.value;
+	}, false);
+	
+	document.getElementById("game_mode").addEventListener("click", function (event) {
+		if (event.target.tagName !== "LI" || hasClass(event.target, 'active')) return;
+		var game_mode_choices = [].concat(_toConsumableArray(document.getElementById("game_mode").children[0].children));
+		game_mode_choices.forEach(function (choice) {
+			removeClass(choice, 'active');
+		});
+		addClass(event.target, 'active');
+		game_mode = event.target.dataset.value;
 	}, false);
 
 	document.getElementById("newgame").addEventListener('click', function () {
