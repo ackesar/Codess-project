@@ -528,7 +528,7 @@ function newGame() {
 	console.log('krsken')
 	var depth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 	var starting_player = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
+	var game_mode = arguments.length > 1 && arguments[2] !== undefined ? arguments[2] : 1;
 	//Instantiating a new player and an empty board
 	var p = new _Player2.default(parseInt(depth));
 	var b = new _Board2.default(['', '', '', '', '', '', '', '', '']);
@@ -549,7 +549,8 @@ function newGame() {
 	var starting = parseInt(starting_player),
 	    maximizing = starting,
 	    player_turn = starting;
-
+	var mode = parseInt(game_mode)
+	if(mode){
 	//If computer is going to start, choose a random cell as long as it is the center or a corner
 	if (!starting) {
 		var center_and_corners = [0, 2, 4, 6, 8];
@@ -598,7 +599,51 @@ function newGame() {
 			});
 		}, false);
 		if (cell) addClass(html_cells[index], cell);
+	}
+		//if game mode is human vs human
+			If(!mode){
+		//adding event listener for each cell
+		b.state.forEach((cell, index) => {
+  		html_cells[index].addEventListener('click', () => {
+  			//If cell is already occupied or the board is in a terminal state or it's not humans turn, return false
+  			if(hasClass(html_cells[index], 'x') || hasClass(html_cells[index], 'o') || b.isTerminal() || !player_turn) return false;
+
+  			let symbol = (starting == 1) ? 'x' : 'o'; // player 1 is always 'x'
+	
+  			//Update the Board class instance as well as the Board UI
+  			b.insert(symbol, index);
+  			addClass(html_cells[index], symbol);
+			
+			if(b.isTerminal()) {
+  				let { winner } = b.isTerminal();
+				if(winner !== 'draw') addClass(document.getElementById("charachters"), 'celebrate_human');
+  				drawWinningLine(b.isTerminal());
+  			}
+			player_turn = 2;
+			//starting = 2;
+			b.state.forEach((cell, index) => {
+  		html_cells[index].addEventListener('click', () => {
+  			//If cell is already occupied or the board is in a terminal state or it's not humans turn, return false
+  			if(hasClass(html_cells[index], 'x') || hasClass(html_cells[index], 'o') || b.isTerminal() || !player_turn) return false;
+
+  			let symbol = (starting == 2) ? 'x' : 'o'; // player 1 is always 'x'
+	
+  			//Update the Board class instance as well as the Board UI
+  			b.insert(symbol, index);
+  			addClass(html_cells[index], symbol);
+			
+			if(b.isTerminal()) {
+  				let { winner } = b.isTerminal();
+				if(winner !== 'draw') addClass(document.getElementById("charachters"), 'celebrate_human');
+  				drawWinningLine(b.isTerminal());
+			}
+			player_turn = 1;
+			if(cell) addClass(html_cells[index], cell);
+		
+		
+  
 	});
+	
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -606,7 +651,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	//Start a new game when page loads with default values
 	var depth = -1;
 	var starting_player = 1;
-	newGame(depth, starting_player);
+	var new_game = 1;
+	newGame(depth, starting_player, game_mode);
 
 	//Events handlers for depth, starting player options
 	document.getElementById("depth").addEventListener("click", function (event) {
@@ -628,9 +674,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		addClass(event.target, 'active');
 		starting_player = event.target.dataset.value;
 	}, false);
+				
+	document.getElementById("game_mode").addEventListener("click", function (event) {
+		if (event.target.tagName !== "LI" || hasClass(event.target, 'active')) return;
+		var game_mode_choices = [].concat(_toConsumableArray(document.getElementById("game_mode").children[0].children));
+		game_mode_choices.forEach(function (choice) {
+			removeClass(choice, 'active');
+		});
+		addClass(event.target, 'active');
+		game_mode = event.target.dataset.value;
+	}, false);
+
 
 	document.getElementById("newgame").addEventListener('click', function () {
-		newGame(depth, starting_player);
+		newGame(depth, starting_player, game_mode);
 	});
 });
 
