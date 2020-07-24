@@ -527,7 +527,7 @@ function drawWinningLine(_ref) {
 function newGame() {
 	var depth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 	var starting_player = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
+	
 	//Instantiating a new player and an empty board
 	var p = new _Player2.default(parseInt(depth));
 	var b = new _Board2.default(['', '', '', '', '', '', '', '', '']);
@@ -605,6 +605,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	//Start a new game when page loads with default values
 	var depth = -1;
 	var starting_player = 1;
+	var game_mode = 1;
 	newGame(depth, starting_player);
 
 	//Events handlers for depth, starting player options
@@ -629,7 +630,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	}, false);
 
 	document.getElementById("newgame").addEventListener('click', function () {
-		newGame(depth, starting_player);
+		newGame(depth, starting_player, game_mode);
 	});
 });
 
