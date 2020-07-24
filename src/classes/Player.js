@@ -18,7 +18,7 @@ class Player {
      * @param {Number} depth - used internally in the function to increment the depth each recursive call
      * @return {Number} the index of the best move
      */
-	getBestMove(board, maximizing = true, callback = () => {}, depth = 0) {
+	getBestMove(board, maximizing = true, callback = () => {}, depth = 0, alpha, beta) {
 		//Throw an error if the first argument is not a board
 		if(board.constructor.name !== "Board") throw('The first argument to the getBestMove method should be an instance of Board class.');
 		//Decides whether to log each tree iteration to the console
@@ -79,6 +79,11 @@ class Player {
 				let node_value = this.getBestMove(child, false, callback, depth + 1);
 				//Updating best value
 				best = Math.max(best, node_value);
+				//applying alpha beta pruning to optimize the algorithm
+				alpha = max(alpha, best); 
+				if (beta <= alpha) 
+                break; 
+       
 
 				//Console Tracing Code
 				if(TRACE) {
@@ -141,6 +146,9 @@ class Player {
 				let node_value = this.getBestMove(child, true, callback, depth + 1);
 				//Updating best value
 				best = Math.min(best, node_value);
+				beta = min(beta, best); 
+				if (beta <= alpha) 
+                break; 
 
 				//Console Tracing Code
 				if(TRACE) {
